@@ -31,16 +31,9 @@ class MySql
     $source_lines = explode( "\n", $theSourceCode );
     if ($source_lines===false) Affirm::assertFailed( "Internal error." );
 
-    $map      = array();
-    $comments = array();
+    $map = array();
     for ($i = 0; $i<count( $source_lines ); $i++)
     {
-      if (preg_match( '/^COMMENT ON COLUMN `(\w+)`.`(\w+)`/', $source_lines[$i], $matches ))
-      {
-        $i++;
-        $comments[$matches[1]][$matches[2]] = $source_lines[$i];
-      }
-
       if (preg_match( '/^CREATE TABLE `(\w+)`/', $source_lines[$i], $matches ))
       {
         $table_name = $matches[1];
@@ -50,6 +43,16 @@ class MySql
           $map[$table_name][$matches[1]] = $i;
           $i++;
         }
+      }
+    }
+
+    $comments = array();
+    for ($i = 0; $i<count( $source_lines ); $i++)
+    {
+      if (preg_match( '/^COMMENT ON COLUMN `(\w+)`.`(\w+)`/', $source_lines[$i], $matches ))
+      {
+        $i++;
+        $comments[$matches[1]][$matches[2]] = $source_lines[$i];
       }
     }
 
