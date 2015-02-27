@@ -10,7 +10,7 @@ use SetBased\Affirm\Affirm;
  *
  * @package SetBased\ErdConcepts\MySql
  */
-class MySql
+class MySqlFix
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
