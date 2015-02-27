@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "65112335fac803a7e6926177dc80d05b",
+    "hash": "26f9b4e1c394b68f7a4f04dcea8ba0d6",
     "packages": [
         {
             "name": "setbased/php-affirm",
@@ -52,6 +52,7 @@
     "minimum-stability": "stable",
     "stability-flags": [],
     "prefer-stable": false,
+    "prefer-lowest": false,
     "platform": [],
     "platform-dev": []
 }
