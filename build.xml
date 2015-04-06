@@ -48,4 +48,9 @@
         <gittag repository="." name="${VERSION}"/>
         <gitpush repository="." refspec="${VERSION}" quiet="false"/>
     </target>
+
+    <!-- Runs all unit tests -->
+    <target name="tests">
+        <exec command="bin/phpunit --bootstrap=test/bootstrap.php test" passthru="true" checkreturn="true"/>
+    </target>
 </project>
