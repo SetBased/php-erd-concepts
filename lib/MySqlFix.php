@@ -2,8 +2,6 @@
 //----------------------------------------------------------------------------------------------------------------------
 namespace SetBased\ErdConcepts;
 
-use SetBased\Affirm\Affirm;
-
 //----------------------------------------------------------------------------------------------------------------------
 /**
  * Class MySql
@@ -68,15 +66,18 @@ class MySqlFix
     // Enhance the column definitions with comments.
     foreach ($comments as $table_name => $columns)
     {
-      if (!isset($map[$table_name])) Affirm::assertFailed( "Table '%s' is not defined.", $table_name );
+      if (!isset($map[$table_name]))
+      {
+        throw new \RuntimeException( sprintf("Table '%s' is not defined.", $table_name) );
+      }
 
       foreach ($columns as $column_name => $comment)
       {
         if (!isset($map[$table_name][$column_name]))
         {
-          Affirm::assertFailed( "Column '%s' is not defined in '%s' table statements.",
+          throw new \RuntimeException( sprintf("Column '%s' is not defined in '%s' table statements.",
                                 $column_name,
-                                $table_name );
+                                $table_name ));
         }
 
         $line_number = $map[$table_name][$column_name];
@@ -154,7 +155,10 @@ class MySqlFix
     // Enhance the column definitions with comments.
     foreach ($comments as $table_name => $comment)
     {
-      if (!isset($map[$table_name])) Affirm::assertFailed( "Table '%s' is not defined.", $table_name );
+      if (!isset($map[$table_name]))
+      {
+        throw new \RuntimeException( sprintf("Table '%s' is not defined.", $table_name ));
+      }
 
         $line_number = $map[$table_name];
 
@@ -213,7 +217,10 @@ class MySqlFix
     // Enhance the column definitions with comments.
     foreach ($comments as $index_name => $comment)
     {
-      if (!isset($map[$index_name])) Affirm::assertFailed( "Table '%s' is not defined.", $index_name );
+      if (!isset($map[$index_name]))
+      {
+        throw new \RuntimeException( sprintf("Table '%s' is not defined.", $index_name ));
+      }
 
       $line_number = $map[$index_name];
 
