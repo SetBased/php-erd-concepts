@@ -10,7 +10,7 @@
   ],
   "require": {
     "php": ">=5.4.0",
-    "setbased/phing-extensions": "1.*"
+    "setbased/phing-extensions": "2.*"
   },
   "require-dev": {
     "phpunit/phpunit": "5.*"
