@@ -22,7 +22,7 @@ class MySqlFix
    *
    * @return string
    */
-  static public function fixColumnComments($theSourceCode)
+  public static function fixColumnComments($theSourceCode)
   {
     $source_lines = explode("\n", $theSourceCode);
 
@@ -33,7 +33,7 @@ class MySqlFix
     $table_name = null;
     foreach ($source_lines as $i => $line)
     {
-      if ($table_name)
+      if (isset($table_name))
       {
         if (preg_match('/^  `(\w+)`/', $source_lines[$i], $matches))
         {
@@ -45,7 +45,7 @@ class MySqlFix
         }
       }
 
-      if (!$table_name && preg_match('/^CREATE TABLE `(\w+)`/', $line, $matches))
+      if ($table_name===null && preg_match('/^CREATE TABLE `(\w+)`/', $line, $matches))
       {
         $table_name = $matches[1];
       }
@@ -106,7 +106,7 @@ class MySqlFix
    *
    * @return string
    */
-  static public function fixIndexComments($theSourceCode)
+  public static function fixIndexComments($theSourceCode)
   {
     $source_lines = explode("\n", $theSourceCode);
 
@@ -168,7 +168,7 @@ class MySqlFix
    *
    * @return string
    */
-  static public function fixTableComments($theSourceCode)
+  public static function fixTableComments($theSourceCode)
   {
     $source_lines = explode("\n", $theSourceCode);
 
@@ -195,7 +195,7 @@ class MySqlFix
         }
       }
 
-      if (!$table_name && preg_match('/^CREATE TABLE `(\w+)`(\s*\()?/', $line, $matches))
+      if ($table_name===null && preg_match('/^CREATE TABLE `(\w+)`(\s*\()?/', $line, $matches))
       {
         $table_name = $matches[1];
         if ($matches[2]) $level = 1;
