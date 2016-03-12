@@ -180,7 +180,7 @@ class MySqlFix
     $level      = 0;
     foreach ($source_lines as $i => $line)
     {
-      if ($table_name)
+      if (isset($table_name))
       {
         if (preg_match('/\)|\(/', $source_lines[$i], $matches))
         {
@@ -247,7 +247,7 @@ class MySqlFix
    *
    * @return string
    */
-  static protected function escapeMysqlString($unescaped_string)
+  protected static function escapeMysqlString($unescaped_string)
   {
     // We prefer to use mysqli::escape_string but this method requires a connection. Since ERD Concepts generates
     // SQL code in UTF-8 and $unescaped_string is not user input (from the evil internet) we can safely use addslashes.
