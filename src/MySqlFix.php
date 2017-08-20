@@ -35,7 +35,7 @@ class MySqlFix
     {
       if (isset($table_name))
       {
-        if (preg_match('/^  `(\w+)`/', $source_lines[$i], $matches))
+        if (preg_match('/^  (`?\w+`?)/', $source_lines[$i], $matches))
         {
           $map[$table_name][$matches[1]] = $i;
         }
@@ -45,7 +45,7 @@ class MySqlFix
         }
       }
 
-      if ($table_name===null && preg_match('/^CREATE TABLE `(\w+)`/', $line, $matches))
+      if ($table_name===null && preg_match('/^CREATE TABLE (`?\w+`?)/', $line, $matches))
       {
         $table_name = $matches[1];
       }
@@ -55,7 +55,7 @@ class MySqlFix
     $comments = [];
     foreach ($source_lines as $i => $line)
     {
-      if (preg_match('/^COMMENT ON COLUMN `(\w+)`.`(\w+)`/', $line, $matches))
+      if (preg_match('/^COMMENT ON COLUMN (`?\w+`?).(`?\w+`?)/', $line, $matches))
       {
         $comments[$matches[1]][$matches[2]] = trim($source_lines[$i + 1]);
       }
@@ -117,7 +117,7 @@ class MySqlFix
     $index_name = null;
     foreach ($source_lines as $i => $line)
     {
-      if (preg_match('/^CREATE INDEX `(\w+)`(\s*\()?/', $line, $matches))
+      if (preg_match('/^CREATE INDEX (`?\w+`?)(\s*\()?/', $line, $matches))
       {
         $map[$matches[1]] = $i;
       }
@@ -127,7 +127,7 @@ class MySqlFix
     $comments = [];
     foreach ($source_lines as $i => $line)
     {
-      if (preg_match('/^COMMENT ON INDEX `(\w+)`/', $line, $matches))
+      if (preg_match('/^COMMENT ON INDEX (`?\w+`?)/', $line, $matches))
       {
         $comments[$matches[1]] = trim($source_lines[$i + 1]);
       }
@@ -195,7 +195,7 @@ class MySqlFix
         }
       }
 
-      if ($table_name===null && preg_match('/^CREATE TABLE `(\w+)`(\s*\()?/', $line, $matches))
+      if ($table_name===null && preg_match('/^CREATE TABLE (`?\w+`?)(\s*\()?/', $line, $matches))
       {
         $table_name = $matches[1];
         if ($matches[2]) $level = 1;
@@ -206,7 +206,7 @@ class MySqlFix
     $comments = [];
     foreach ($source_lines as $i => $line)
     {
-      if (preg_match('/^COMMENT ON TABLE `(\w+)`/', $line, $matches))
+      if (preg_match('/^COMMENT ON TABLE (`?\w+`?)/', $line, $matches))
       {
         $comments[$matches[1]] = trim($source_lines[$i + 1]);
       }
