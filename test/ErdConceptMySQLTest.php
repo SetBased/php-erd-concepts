@@ -5,44 +5,43 @@ use SetBased\ErdConcepts\MySqlFix;
 //----------------------------------------------------------------------------------------------------------------------
 class ErdConceptMySQLTest extends PHPUnit_Framework_TestCase
 {
-  private $mySource;
-
-  public function setUp()
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Test column comments with quoted identifiers.
+   */
+  public function testColumns1()
   {
-    $this->mySource = file_get_contents(realpath( __DIR__ ).'/php-erd-concepts_create.ddl');
+    $source   = file_get_contents(realpath(__DIR__).'/source/quoted/php-erd-concepts-create.ddl');
+    $expected = file_get_contents(realpath(__DIR__).'/template/quoted/column.ddl');
+
+    $result = MySqlFix::fixColumnComments($source);
+    $this->assertEquals($expected, $result);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Test index comments with quoted identifiers.
    */
-  public function testColumns()
+  public function testIndex1()
   {
-    $template = file_get_contents(realpath( __DIR__ ).'/templates/column_template.ddl');
+    $source   = file_get_contents(realpath(__DIR__).'/source/quoted/php-erd-concepts-create.ddl');
+    $expected = file_get_contents(realpath(__DIR__).'/template/quoted/index.ddl');
 
-    $result = MySqlFix::fixColumnComments($this->mySource);
-    $this->assertEquals($template, $result);
+    $result = MySqlFix::fixIndexComments($source);
+    $this->assertEquals($expected, $result);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
+   * Test table comments with quoted identifiers.
    */
-  public function testTables()
+  public function testTables1()
   {
-    $template = file_get_contents(realpath( __DIR__ ).'/templates/table_template.ddl');
+    $source = file_get_contents(realpath(__DIR__).'/source/quoted/php-erd-concepts-create.ddl');
+    $expected = file_get_contents(realpath(__DIR__).'/template/quoted/table.ddl');
 
-    $result = MySqlFix::fixTableComments($this->mySource);
-    $this->assertEquals($template, $result);
-  }
-
-  //--------------------------------------------------------------------------------------------------------------------
-  /**
-   */
-  public function testIndex()
-  {
-    $template = file_get_contents(realpath( __DIR__ ).'/templates/index_template.ddl');
-
-    $result = MySqlFix::fixIndexComments($this->mySource);
-    $this->assertEquals($template, $result);
+    $result = MySqlFix::fixTableComments($source);
+    $this->assertEquals($expected, $result);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
