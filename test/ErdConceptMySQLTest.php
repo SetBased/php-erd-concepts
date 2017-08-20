@@ -1,9 +1,14 @@
 <?php
 //----------------------------------------------------------------------------------------------------------------------
+namespace SetBased\ErdConcepts\Test;
+
+use PHPUnit\Framework\TestCase;
 use SetBased\ErdConcepts\MySqlFix;
 
-//----------------------------------------------------------------------------------------------------------------------
-class ErdConceptMySQLTest extends PHPUnit_Framework_TestCase
+/**
+ * Unit test for class MySqlFix.
+ */
+class ErdConceptMySQLTest extends TestCase
 {
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -15,7 +20,7 @@ class ErdConceptMySQLTest extends PHPUnit_Framework_TestCase
     $expected = file_get_contents(realpath(__DIR__).'/template/quoted/column.ddl');
 
     $result = MySqlFix::fixColumnComments($source);
-    $this->assertEquals($expected, $result);
+    self::assertEquals($expected, $result);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -28,7 +33,7 @@ class ErdConceptMySQLTest extends PHPUnit_Framework_TestCase
     $expected = file_get_contents(realpath(__DIR__).'/template/unquoted/column.ddl');
 
     $result = MySqlFix::fixColumnComments($source);
-    $this->assertEquals($expected, $result);
+    self::assertEquals($expected, $result);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -41,7 +46,7 @@ class ErdConceptMySQLTest extends PHPUnit_Framework_TestCase
     $expected = file_get_contents(realpath(__DIR__).'/template/quoted/index.ddl');
 
     $result = MySqlFix::fixIndexComments($source);
-    $this->assertEquals($expected, $result);
+    self::assertEquals($expected, $result);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -54,7 +59,7 @@ class ErdConceptMySQLTest extends PHPUnit_Framework_TestCase
     $expected = file_get_contents(realpath(__DIR__).'/template/unquoted/index.ddl');
 
     $result = MySqlFix::fixIndexComments($source);
-    $this->assertEquals($expected, $result);
+    self::assertEquals($expected, $result);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -67,7 +72,7 @@ class ErdConceptMySQLTest extends PHPUnit_Framework_TestCase
     $expected = file_get_contents(realpath(__DIR__).'/template/quoted/table.ddl');
 
     $result = MySqlFix::fixTableComments($source);
-    $this->assertEquals($expected, $result);
+    self::assertEquals($expected, $result);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
@@ -80,7 +85,7 @@ class ErdConceptMySQLTest extends PHPUnit_Framework_TestCase
     $expected = file_get_contents(realpath(__DIR__).'/template/unquoted/table.ddl');
 
     $result = MySqlFix::fixTableComments($source);
-    $this->assertEquals($expected, $result);
+    self::assertEquals($expected, $result);
   }
 
   //--------------------------------------------------------------------------------------------------------------------
