@@ -9,11 +9,11 @@
     "fix"
   ],
   "require": {
-    "php": ">=7.0.0"
+    "php": ">=7.3"
   },
   "require-dev": {
     "phpunit/phpunit": "^6.0.0",
-    "phing/phing": "^2.0.0"
+    "phing/phing": "^2.0"
   },
   "autoload": {
     "psr-4": {

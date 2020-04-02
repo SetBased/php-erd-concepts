@@ -1,4 +1,6 @@
-.idea/
-bin/
-vendor/
-composer.lock
+/.idea/
+/bin/
+/composer.lock
+/custom.task.properties
+/custom.type.properties
+/vendor/
