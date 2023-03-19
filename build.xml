@@ -1,16 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="php-erd-concepts" default="build" basedir=".">
-    <target name="build">
-        <echo message="noting to do."/>
-    </target>
-
     <!-- Run composer update and executes various other updates -->
     <target name="update">
-    <exec command="composer update --prefer-source" checkreturn="true" passthru="true"/>
+        <exec executable="composer" checkreturn="true" passthru="true">
+            <arg value="--ansi"/>
+            <arg value="update"/>
+        </exec>
+        <exec executable="npm" checkreturn="true" passthru="true">
+            <arg value="--ansi"/>
+            <arg value="update"/>
+        </exec>
+
+        <phing phingfile="build.xml" target="outdated" haltonfailure="true"/>
+    </target>
+
+    <!-- Show outdated dependencies -->
+    <target name="outdated">
+        <exec executable="composer" checkreturn="true" passthru="true">
+            <arg value="--ansi"/>
+            <arg value="outdated"/>
+            <arg value="--direct"/>
+        </exec>
     </target>
 
     <!-- Runs all unit tests -->
     <target name="unit">
-        <exec command="bin/phpunit --bootstrap=test/bootstrap.php test" passthru="true" checkreturn="true"/>
+        <exec executable="bin/phpunit" passthru="true" checkreturn="true"/>
     </target>
+
+    <target name="build"/>
 </project>
