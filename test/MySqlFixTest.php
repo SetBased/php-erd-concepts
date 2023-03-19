@@ -8,8 +8,25 @@ use SetBased\ErdConcepts\MySqlFix;
 /**
  * Unit test for class MySqlFix.
  */
-class ErdConceptMySQLTest extends TestCase
+class MySqlFixTest extends TestCase
 {
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   Creates empty directories for storing results.
+   */
+  public static function setUpBeforeClass(): void
+  {
+    $dirs = [realpath(__DIR__).'/result/quoted/',
+             realpath(__DIR__).'/result/unquoted/'];
+    foreach ($dirs as $dir)
+    {
+      if (!is_dir($dir))
+      {
+        mkdir($dir, recursive: true);
+      }
+    }
+  }
+
   //--------------------------------------------------------------------------------------------------------------------
   /**
    * Test column comments with quoted identifiers.
@@ -20,6 +37,7 @@ class ErdConceptMySQLTest extends TestCase
     $expected = file_get_contents(realpath(__DIR__).'/template/quoted/column.ddl');
 
     $result = MySqlFix::fixColumnComments($source);
+    file_put_contents(realpath(__DIR__).'/result/quoted/column.ddl', $result);
     self::assertEquals($expected, $result);
   }
 
@@ -33,6 +51,7 @@ class ErdConceptMySQLTest extends TestCase
     $expected = file_get_contents(realpath(__DIR__).'/template/unquoted/column.ddl');
 
     $result = MySqlFix::fixColumnComments($source);
+    file_put_contents(realpath(__DIR__).'/result/unquoted/column.ddl', $result);
     self::assertEquals($expected, $result);
   }
 
@@ -46,6 +65,7 @@ class ErdConceptMySQLTest extends TestCase
     $expected = file_get_contents(realpath(__DIR__).'/template/quoted/index.ddl');
 
     $result = MySqlFix::fixIndexComments($source);
+    file_put_contents(realpath(__DIR__).'/result/quoted/index.ddl', $result);
     self::assertEquals($expected, $result);
   }
 
@@ -59,6 +79,7 @@ class ErdConceptMySQLTest extends TestCase
     $expected = file_get_contents(realpath(__DIR__).'/template/unquoted/index.ddl');
 
     $result = MySqlFix::fixIndexComments($source);
+    file_put_contents(realpath(__DIR__).'/result/unquoted/index.ddl', $result);
     self::assertEquals($expected, $result);
   }
 
@@ -72,6 +93,7 @@ class ErdConceptMySQLTest extends TestCase
     $expected = file_get_contents(realpath(__DIR__).'/template/quoted/table.ddl');
 
     $result = MySqlFix::fixTableComments($source);
+    file_put_contents(realpath(__DIR__).'/result/quoted/table.ddl', $result);
     self::assertEquals($expected, $result);
   }
 
@@ -85,6 +107,7 @@ class ErdConceptMySQLTest extends TestCase
     $expected = file_get_contents(realpath(__DIR__).'/template/unquoted/table.ddl');
 
     $result = MySqlFix::fixTableComments($source);
+    file_put_contents(realpath(__DIR__).'/result/unquoted/table.ddl', $result);
     self::assertEquals($expected, $result);
   }
 

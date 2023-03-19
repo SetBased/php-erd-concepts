@@ -5,7 +5,7 @@
 /*  FileName : php-erd-concepts.ecm                                               */
 /*  Platform : MySQL 5                                                            */
 /*  Version  : Concept                                                            */
-/*  Date     : vrijdag 27 februari 2015                                           */
+/*  Date     : Sunday, March 19, 2023                                             */
 /*================================================================================*/
 /*================================================================================*/
 /* CREATE TABLES                                                                  */
@@ -59,6 +59,32 @@ Column 2.
 
 /*
 COMMENT ON COLUMN `FOO1`.`c3`
+Column 3.
+*/
+
+CREATE TABLE `FOO2` (
+  `c1` VARCHAR(40) COMMENT 'Column 1.',
+  `c2` VARCHAR(40) COMMENT 'Column 2.',
+  `c3` VARCHAR(40) COMMENT 'Column 3.'
+);
+
+/*
+COMMENT ON TABLE `FOO2`
+This is table FOO2. Same as FOO1, but without a primary key.
+*/
+
+/*
+COMMENT ON COLUMN `FOO2`.`c1`
+Column 1.
+*/
+
+/*
+COMMENT ON COLUMN `FOO2`.`c2`
+Column 2.
+*/
+
+/*
+COMMENT ON COLUMN `FOO2`.`c3`
 Column 3.
 */
 

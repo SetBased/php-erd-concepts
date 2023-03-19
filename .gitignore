@@ -7,4 +7,5 @@
 /phpunit.xml
 /test/coverage.xml
 /test/report/
+/test/result/
 /vendor/

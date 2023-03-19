@@ -5,7 +5,7 @@
 /*  FileName : php-erd-concepts.ecm                                               */
 /*  Platform : MySQL 5                                                            */
 /*  Version  : Concept                                                            */
-/*  Date     : zondag 20 augustus 2017                                            */
+/*  Date     : Sunday, March 19, 2023                                             */
 /*================================================================================*/
 /*================================================================================*/
 /* CREATE TABLES                                                                  */
@@ -62,6 +62,32 @@ COMMENT ON COLUMN FOO1.c3
 Column 3.
 */
 
+CREATE TABLE FOO2 (
+  c1 VARCHAR(40),
+  c2 VARCHAR(40),
+  c3 VARCHAR(40)
+);
+
+/*
+COMMENT ON TABLE FOO2
+This is table FOO2. Same as FOO1, but without a primary key.
+*/
+
+/*
+COMMENT ON COLUMN FOO2.c1
+Column 1.
+*/
+
+/*
+COMMENT ON COLUMN FOO2.c2
+Column 2.
+*/
+
+/*
+COMMENT ON COLUMN FOO2.c3
+Column 3.
+*/
+
 /*================================================================================*/
 /* CREATE INDEXES                                                                 */
 /*================================================================================*/
@@ -79,3 +105,4 @@ CREATE INDEX IX_BAR12 ON BAR1 (c3, c4, c5);
 COMMENT ON INDEX IX_BAR12
 This is a multi column index.
 */
+
