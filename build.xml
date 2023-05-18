@@ -6,10 +6,6 @@
             <arg value="--ansi"/>
             <arg value="update"/>
         </exec>
-        <exec executable="npm" checkreturn="true" passthru="true">
-            <arg value="--ansi"/>
-            <arg value="update"/>
-        </exec>
 
         <phing phingfile="build.xml" target="outdated" haltonfailure="true"/>
     </target>
