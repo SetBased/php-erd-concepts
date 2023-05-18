@@ -8,7 +8,7 @@
 <COPYRIGHT></COPYRIGHT>
 <VERSION>Concept</VERSION>
 <CREATED>2015-01-03</CREATED>
-<MODIFIED>2023-03-19</MODIFIED>
+<MODIFIED>2023-05-18</MODIFIED>
 <COMMENTS></COMMENTS>
 <DEFAULTPAGEID>0</DEFAULTPAGEID>
 <DEFAULT_SCHEMA></DEFAULT_SCHEMA>
@@ -1439,7 +1439,9 @@
 <DATA>
 <ID>{C8ACA941-3953-4662-B775-071A49D6B4D7}</ID>
 <NAME>BAR1</NAME>
-<COMMENT>This table is table BAR1.</COMMENT>
+<COMMENT>This table is table BAR1. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ornare suspendisse sed nisi lacus sed viverra tellus in hac. Sed enim ut sem viverra. Proin libero nunc consequat interdum. Donec et odio pellentesque diam volutpat commodo sed. Dictum non consectetur a erat nam. Tempus quam pellentesque nec nam aliquam sem et tortor consequat. Fringilla ut morbi tincidunt augue interdum velit. Purus ut faucibus pulvinar elementum integer. Sit amet volutpat consequat mauris nunc congue. Arcu odio ut sem nulla pharetra diam sit amet nisl.
+
+Dui ut ornare lectus sit. At quis risus sed vulputate odio ut enim. Est ante in nibh mauris cursus mattis. Id volutpat lacus laoreet non. Mattis ullamcorper velit sed ullamcorper morbi tincidunt ornare massa. Netus et malesuada fames ac turpis. Pulvinar mattis nunc sed blandit libero volutpat. Aliquam faucibus purus in massa. Tempor id eu nisl nunc mi ipsum faucibus vitae aliquet. Pellentesque habitant morbi tristique senectus. Tempor nec feugiat nisl pretium fusce id velit ut tortor. Donec pretium vulputate sapien nec sagittis aliquam malesuada bibendum. Varius vel pharetra vel turpis nunc. Elit eget gravida cum sociis natoque penatibus. Arcu bibendum at varius vel pharetra. Volutpat odio facilisis mauris sit. Risus quis varius quam quisque id. Quam vulputate dignissim suspendisse in est ante in nibh mauris. Arcu ac tortor dignissim convallis aenean et tortor at. Amet venenatis urna cursus eget nunc scelerisque viverra.</COMMENT>
 <COLUMNS>
 <COLUMN>
 <OID>{B5CFAE34-AE46-437F-9190-4FC282BE400C}</OID>
@@ -1561,7 +1563,7 @@
 <USING></USING>
 </PROPERTIES>
 <STORAGE></STORAGE>
-<COMMENTS>Indexes can have comments to.</COMMENTS>
+<COMMENTS>Indexes can have comments too.</COMMENTS>
 <RELID></RELID>
 </INDEXKEY>
 <INDEXKEY>
@@ -1579,7 +1581,27 @@
 <USING></USING>
 </PROPERTIES>
 <STORAGE></STORAGE>
-<COMMENTS>This is a multi column index.</COMMENTS>
+<COMMENTS>This is a multi column index.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</COMMENTS>
+<RELID></RELID>
+</INDEXKEY>
+<INDEXKEY>
+<OID>{46FCEDB3-847A-47E3-99B2-EAC1737E6026}</OID>
+<NAME>IX_BAR13</NAME>
+<NAMEMASK>IX_%TABLE_NP%3</NAMEMASK>
+<PRIMARY>0</PRIMARY>
+<UNIQUE>1</UNIQUE>
+<CONSTRAINT>0</CONSTRAINT>
+<INDEXTYPE></INDEXTYPE>
+<COLUMNS>c5</COLUMNS>
+<KEYORDER>ASC</KEYORDER>
+<KEYLENGTH>&quot;&quot;</KEYLENGTH>
+<PROPERTIES>
+<USING></USING>
+</PROPERTIES>
+<STORAGE></STORAGE>
+<COMMENTS>A unique index.</COMMENTS>
 <RELID></RELID>
 </INDEXKEY>
 </INDEXKEYS>
@@ -1605,7 +1627,8 @@
 <DEFAULT></DEFAULT>
 <LENGTH>40</LENGTH>
 </PROPERTIES>
-<DESCRIPTION>Column 1.</DESCRIPTION>
+<DESCRIPTION>Column 1. 
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</DESCRIPTION>
 <PRIMARYKEY>0</PRIMARYKEY>
 <REQUIRED>0</REQUIRED>
 <AUTOINCREMENT>0</AUTOINCREMENT>
@@ -1694,7 +1717,7 @@
 <X>380</X>
 <Y>460</Y>
 <WIDTH>222</WIDTH>
-<HEIGHT>208</HEIGHT>
+<HEIGHT>230</HEIGHT>
 <GEN_DDL>1</GEN_DDL>
 <FONTDATA></FONTDATA>
 <BACKCOLOR>255,255,255</BACKCOLOR>

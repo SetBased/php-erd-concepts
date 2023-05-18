@@ -1,5 +1,6 @@
 <?php
-//----------------------------------------------------------------------------------------------------------------------
+declare(strict_types=1);
+
 namespace SetBased\ErdConcepts;
 
 /**
@@ -12,6 +13,16 @@ class MySqlFix
    * Maximum length of column comments in MySQL.
    */
   const MAX_COLUMN_COMMENT_LENGTH = 1024;
+
+  /**
+   * Maximum length of table comments in MySQL.
+   */
+  const MAX_TABLE_COMMENT_LENGTH = 2048;
+
+  /**
+   * Maximum length of index comments in MySQL.
+   */
+  const MAX_INDEX_COMMENT_LENGTH = 1024;
 
   //--------------------------------------------------------------------------------------------------------------------
   /**
@@ -29,24 +40,24 @@ class MySqlFix
     $map = [];
 
     // Scan the source for column definitions.
-    $table_name = null;
+    $tableName = null;
     foreach ($lines as $i => $line)
     {
-      if (isset($table_name))
+      if (isset($tableName))
       {
-        if (preg_match('/^ {2}(`?\w+`?)/', $line, $matches))
+        if (preg_match('/^ {2}(?<column>`?\w+`?)/', $line, $matches))
         {
-          $map[$table_name][$matches[1]] = $i;
+          $map[$tableName][$matches['column']] = $i;
         }
         else
         {
-          $table_name = null;
+          $tableName = null;
         }
       }
 
-      if ($table_name===null && preg_match('/^CREATE TABLE (`?\w+`?)/', $line, $matches))
+      if ($tableName===null && preg_match('/^CREATE TABLE (?<table>`?\w+`?)/', $line, $matches))
       {
-        $table_name = $matches[1];
+        $tableName = $matches['table'];
       }
     }
 
@@ -54,9 +65,13 @@ class MySqlFix
     $comments = [];
     foreach ($lines as $i => $line)
     {
-      if (preg_match('/^COMMENT ON COLUMN (`?\w+`?).(`?\w+`?)/', $line, $matches))
+      if (preg_match('/^COMMENT ON COLUMN (?<table>`?\w+`?).(?<column>`?\w+`?)/', $line, $matches))
       {
-        $comments[$matches[1]][$matches[2]] = trim($lines[$i + 1]);
+        $comment = self::extractComment($lines, $i, self::MAX_COLUMN_COMMENT_LENGTH);
+        if ($comment!=='')
+        {
+          $comments[$matches['table']][$matches['column']] = $comment;
+        }
       }
     }
 
@@ -123,9 +138,9 @@ class MySqlFix
     $index_name = null;
     foreach ($lines as $i => $line)
     {
-      if (preg_match('/^CREATE INDEX (`?\w+`?)(\s*\()?/', $line, $matches))
+      if (preg_match('/^CREATE (UNIQUE )?INDEX (?<index>`?\w+`?)(\s*\()?/', $line, $matches))
       {
-        $map[$matches[1]] = $i;
+        $map[$matches['index']] = $i;
       }
     }
 
@@ -133,9 +148,13 @@ class MySqlFix
     $comments = [];
     foreach ($lines as $i => $line)
     {
-      if (preg_match('/^COMMENT ON INDEX (`?\w+`?)/', $line, $matches))
+      if (preg_match('/^COMMENT ON INDEX (?<index>`?\w+`?)/', $line, $matches))
       {
-        $comments[$matches[1]] = trim($lines[$i + 1]);
+        $comment = self::extractComment($lines, $i, self::MAX_INDEX_COMMENT_LENGTH);
+        if ($comment!=='')
+        {
+          $comments[$matches['index']] = $comment;
+        }
       }
     }
 
@@ -144,7 +163,7 @@ class MySqlFix
     {
       if (!isset($map[$indexName]))
       {
-        throw new \RuntimeException(sprintf("Table '%s' is not defined.", $indexName));
+        throw new \RuntimeException(sprintf("Index '%s' is not defined.", $indexName));
       }
 
       $lineNumber = $map[$indexName];
@@ -204,10 +223,10 @@ class MySqlFix
         }
       }
 
-      if ($table_name===null && preg_match('/^CREATE TABLE (`?\w+`?)(\s*\()?/', $line, $matches))
+      if ($table_name===null && preg_match('/^CREATE TABLE (?<table>`?\w+`?)(\s*\()?/', $line, $matches))
       {
         $table_name = $matches[1];
-        if ($matches[2])
+        if ($matches['table'])
         {
           $level = 1;
         }
@@ -218,9 +237,13 @@ class MySqlFix
     $comments = [];
     foreach ($lines as $i => $line)
     {
-      if (preg_match('/^COMMENT ON TABLE (`?\w+`?)/', $line, $matches))
+      if (preg_match('/^COMMENT ON TABLE (?<table>`?\w+`?)/', $line, $matches))
       {
-        $comments[$matches[1]] = trim($lines[$i + 1]);
+        $comment = self::extractComment($lines, $i, self::MAX_TABLE_COMMENT_LENGTH);
+        if ($comment!=='')
+        {
+          $comments[$matches['table']] = $comment;
+        }
       }
     }
 
@@ -234,7 +257,7 @@ class MySqlFix
 
       $line_number = $map[$table_name];
 
-      // Truncate comments longer than 60 characters.
+      // Truncate comments longer than 1024 characters.
       if (strlen($comment)>self::MAX_COLUMN_COMMENT_LENGTH)
       {
         $comment = trim(mb_substr($comment, 0, self::MAX_COLUMN_COMMENT_LENGTH - 3)).'...';
@@ -261,6 +284,41 @@ class MySqlFix
     // We prefer to use mysqli::escape_string but this method requires a connection. Since ERD Concepts generates
     // SQL code in UTF-8 and $unescaped_string is not user input (from the evil internet) we can safely use addslashes.
     return addslashes($string);
+  }
+
+  //--------------------------------------------------------------------------------------------------------------------
+  /**
+   * Extracts a commented comment.
+   *
+   * @param array $lines     The SQL code generated by ERD concepts as an array of lines.
+   * @param int   $index     The line number of the comment statement.
+   * @param int   $maxLength The max length of the comment.
+   *
+   * @return string
+   */
+  private static function extractComment(array $lines, int $index, int $maxLength): string
+  {
+    $comment = '';
+
+    if ($index>=1 && $lines[$index - 1]==='/*')
+    {
+      $j = $index + 1;
+      while ($j<sizeof($lines) && $lines[$j]!=='*/')
+      {
+        $comment .= $lines[$j];
+        $comment .= PHP_EOL;
+
+        $j++;
+      }
+    }
+
+    $comment = trim($comment);
+    if (mb_strlen($comment)>$maxLength)
+    {
+      $comment = trim(mb_substr($comment, 0, $maxLength - 3)).'...';
+    }
+
+    return $comment;
   }
 
   //--------------------------------------------------------------------------------------------------------------------
