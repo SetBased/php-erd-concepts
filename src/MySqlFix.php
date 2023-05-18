@@ -264,8 +264,15 @@ class MySqlFix
       }
 
       // Enhance the column definition with comment.
-      $lines[$line_number] = mb_substr(rtrim($lines[$line_number]), 0, -1);
-      $lines[$line_number] .= " COMMENT '".self::escapeMysqlString($comment)."';";
+      if (mb_substr(rtrim($lines[$line_number]), -1)===';')
+      {
+        $lines[$line_number] = mb_substr(rtrim($lines[$line_number]), 0, -1);
+        $lines[$line_number] .= " COMMENT '".self::escapeMysqlString($comment)."';";
+      }
+      else
+      {
+        $lines[$line_number] .= " COMMENT '".self::escapeMysqlString($comment)."'";
+      }
     }
 
     return implode(PHP_EOL, $lines);

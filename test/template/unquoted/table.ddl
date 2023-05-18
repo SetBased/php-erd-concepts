@@ -44,7 +44,8 @@ CREATE TABLE FOO1 (
   c2 VARCHAR(40),
   c3 VARCHAR(40),
   CONSTRAINT PK_FOO1 PRIMARY KEY (c1)
-) COMMENT 'This is table FOO1.';
+) COMMENT 'This is table FOO1.'
+engine=innodb;
 
 /*
 COMMENT ON TABLE FOO1
